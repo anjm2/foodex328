@@ -48,36 +48,23 @@ public class Delivery {
 
         */
 
-        /** Example 2:  finding and process
-        
-        repository().findById(cookStarted.get???()).ifPresent(delivery->{
+
+        repository().findById(cookStarted.getOrderId()).ifPresent(delivery->{
             
-            delivery // do something
+            delivery.setStatus("요리시작됨");
             repository().save(delivery);
 
 
          });
-        */
 
     }
 
     public static void loadDeliveryInfo(OrderPlaced orderPlaced) {
-        /** Example 1:  new item 
-        Delivery delivery = new Delivery();
-        repository().save(delivery);
-
-        */
-
-        /** Example 2:  finding and process
-        
-        repository().findById(orderPlaced.get???()).ifPresent(delivery->{
-            
-            delivery // do something
-            repository().save(delivery);
-
-
-         });
-        */
+      Delivery delivery = new Delivery();
+      delivery.setOrderId(String.valueOf(orderPlaced.getId()));
+      delivery.setAddress(orderPlaced.getAddress());
+      delivery.setStatus("배송대기중");
+      repository().save(delivery);
 
     }
 }
