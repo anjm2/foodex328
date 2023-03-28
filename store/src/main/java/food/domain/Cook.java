@@ -38,8 +38,16 @@ public class Cook {
     }
 
     public void acceptOrReject(AcceptOrRejectCommand acceptOrRejectCommand) {
-        Accepted accepted = new Accepted(this);
-        accepted.publishAfterCommit();
+        if(acceptOrRejectCommand.getAccept()){
+            Accepted accepted = new Accepted(this);
+            accepted.publishAfterCommit();
+        }else
+        {
+            Rejected rejected = new Rejected(this);
+            rejected.publishAfterCommit();
+            
+        }
+        
     }
 
     public void start() {
@@ -53,11 +61,16 @@ public class Cook {
     }
 
     public static void loadOrderInfo(OrderPlaced orderPlaced) {
-        /** Example 1:  new item 
         Cook cook = new Cook();
+        //속을 채우는 일
+        //OrderPlaced -> 추출 !
+        cook.setOrderId(String.valueOf(orderPlaced.getId()));
+        cook.setFoodId(orderPlaced.getFoodId());
+        cook.setOption(orderPlaced.getOption());
+        cook.setStatus("주문됨");
         repository().save(cook);
 
-        */
+        
 
         /** Example 2:  finding and process
         
